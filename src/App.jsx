@@ -4,7 +4,7 @@ import './App.css'
 const App = () => {
   const [team, setTeam] = useState([]);
   const [money, setMoney] = useState(100);
-  const [zombieFighters, setZombieFighers] = useState([
+  const [zombieFighters, setZombieFighters] = useState([
     {
       id: 1,
       name: 'Survivor',
@@ -91,6 +91,10 @@ const App = () => {
     return total + currentMember.strength;
   }, 0);
 
+  let totalAgility = team.reduce((total, currentMember) => {
+    return total + currentMember.agility;
+  }, 0);
+
 
   const handleAddFighter = (fighter) => {
     if (money < fighter.price) {
@@ -100,13 +104,24 @@ const App = () => {
       setTeam(newTeam);
 
       const updatedZombieFighters = zombieFighters.filter((zFighter) => fighter.id !== zFighter.id);
-      setZombieFighers(updatedZombieFighters);
+      setZombieFighters(updatedZombieFighters);
 
       const newTotal = money - fighter.price;
       setMoney(newTotal);
       
     }
   };
+
+  const handleRemoveFighter = (fighter) => {
+      const updatedTeamFighters = team.filter((zFighter) => fighter.id !== zFighter.id);
+      setTeam(updatedTeamFighters);
+
+      const updatedZombieFighters = [...zombieFighters, fighter];
+      setZombieFighters(updatedZombieFighters);
+
+      const newTotal = money + fighter.price;
+      setMoney(newTotal);
+  }
 
 
   return (
@@ -115,6 +130,7 @@ const App = () => {
       <h3>Current Funds: { money }</h3>
       <h3>Your Team</h3>
       <h3>Total Strength: { totalStrength }</h3>
+      <h3>Total Agility: { totalAgility }</h3>
       <ul>
       { team.length ? team.map((zFighter) => (
           <li key={zFighter.id}>
@@ -123,7 +139,7 @@ const App = () => {
             Strength: {zFighter.strength}
             Agility: {zFighter.agility}
             <img src={zFighter.img} alt="Zombie Fighter Image" />
-            <button>Example</button>
+            <button onClick={ () => { handleRemoveFighter(zFighter) }}>Remove</button>
           </li>
         )) : <h3>Pick some team members!</h3> 
       }
