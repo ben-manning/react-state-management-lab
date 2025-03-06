@@ -1,4 +1,5 @@
 import { useState } from "react";
+import './App.css'
 
 const App = () => {
   const [team, setTeam] = useState([]);
@@ -107,6 +108,22 @@ const App = () => {
     <>
       <h1>Hello world!</h1>
       <h3>Current Funds: { money }</h3>
+      <h3>Your Team:</h3>
+      <ul>
+      { team.length ? team.map((zFighter) => (
+          <li key={zFighter.id}>
+            Name: {zFighter.name}
+            Price: {zFighter.price}
+            Strength: {zFighter.strength}
+            Agility: {zFighter.agility}
+            <img src={zFighter.img} alt="Zombie Fighter Image" />
+            <button>Example</button>
+          </li>
+        )) : <h3>Pick some team members!</h3> 
+      }
+      </ul>
+
+      <h3>Available Zombie Fighters</h3>
       <ul>
         { zombieFighters.map((zFighter) => (
           <li key={zFighter.id}>
