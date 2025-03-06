@@ -87,6 +87,10 @@ const App = () => {
     },
   ]);
 
+  let totalStrength = team.reduce((total, currentMember) => {
+    return total + currentMember.strength;
+  }, 0);
+
 
   const handleAddFighter = (fighter) => {
     if (money < fighter.price) {
@@ -100,6 +104,7 @@ const App = () => {
 
       const newTotal = money - fighter.price;
       setMoney(newTotal);
+      
     }
   };
 
@@ -108,7 +113,8 @@ const App = () => {
     <>
       <h1>Hello world!</h1>
       <h3>Current Funds: { money }</h3>
-      <h3>Your Team:</h3>
+      <h3>Your Team</h3>
+      <h3>Total Strength: { totalStrength }</h3>
       <ul>
       { team.length ? team.map((zFighter) => (
           <li key={zFighter.id}>
